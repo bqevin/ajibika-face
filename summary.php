@@ -20,24 +20,76 @@
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="">
-          <div class="page-title">
-            <div class="title_left">
-              <h3>Evaluating the influence of hatespeech</h3>
-            </div>
+                    <?php
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "tweets";
 
-            <div class="title_right">
-              <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search for...">
-                  <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
+                    // Create connection
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Check connection
+                    if ($conn->connect_error) {
+                         die("Connection failed: " . $conn->connect_error);
+                    } 
+                    $sql = "SELECT * FROM uri ";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                      $i = 0;
+                      while($row = $result->fetch_assoc()) {
+                        //Output Data
+                        $tweets = count($row["tweet"]);
+                        $i++;
+                         }
+                    } else {
+                         echo "Somemthing went wrong";
+                    }
+
+                    $conn->close();
+                    ?> 
+        <div class="row top_tiles">
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="tile-stats">
+                <div class="icon"><i class="fa fa-comments-o"></i>
                 </div>
+                <div class="count"><?php echo $i?></div>
+
+                <h3>Total tweets</h3>
+                <p>All collected tweets</p>
+              </div>
+            </div>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="tile-stats">
+                <div class="icon"><i class="fa fa-caret-square-o-right"></i>
+                </div>
+                <div class="count">179</div>
+
+                <h3>KoTs</h3>
+                <p>All Kenyans recorded to tweet</p>
+              </div>
+            </div>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="tile-stats">
+                <div class="icon"><i class="fa fa-sort-amount-desc"></i>
+                </div>
+                <div class="count">179</div>
+
+                <h3>Top KoT</h3>
+                <p>Who tweets Most</p>
+              </div>
+            </div>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="tile-stats">
+                <div class="icon"><i class="fa fa-check-square-o"></i>
+                </div>
+                <div class="count">179</div>
+
+                <h3>Highest Follow</h3>
+                <p>Huge number follows on a KoT</p>
               </div>
             </div>
           </div>
           <div class="clearfix"></div>
-
           <div class="row">
 
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -61,7 +113,7 @@
                   </ul>
                   <div class="clearfix"></div>
                 </div>
-                
+
               </div>
             </div>
           </div>
