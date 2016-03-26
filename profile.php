@@ -39,7 +39,35 @@
             </div>
           </div>
           <div class="clearfix"></div>
+          <?php 
+          if(isset($_GET['user'])) {
+               $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "tweets";
 
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                     die("Connection failed: " . $conn->connect_error);
+                } 
+                $user = $_GET['user'];
+                $sql = "SELECT * FROM uri WHERE screen_name = '$user'";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                      //Collect all profile details 
+                      $name = $row["name"];
+                      $prof = $row["profile_image_url"] ;
+                      $prof = str_replace("_normal","",$prof);
+                      $location = $row["location"];
+                      $desc = $row["description"];
+                      //$tweets = $row["tweet"];
+                      $handle = $row["screen_name"];
+                      //$time =$row["composed_time"];
+                    }
+                    ?>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
@@ -72,7 +100,7 @@
                       <div id="crop-avatar">
                         <!-- Current avatar -->
                         <div class="avatar-view" title="Change the avatar">
-                          <img src="images/picture.jpg" alt="Avatar">
+                          <img src="<?php echo $prof ?>" alt="Avatar">
                         </div>
 
                         <!-- Cropping modal -->
@@ -143,27 +171,22 @@
                       <!-- end of image cropping -->
 
                     </div>
-                    <h3>Samuel Doe</h3>
+                    <h3><?php echo $name?></h3>
 
                     <ul class="list-unstyled user_data">
-                      <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
-                      </li>
-
-                      <li>
-                        <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
-                      </li>
-
-                      <li class="m-top-xs">
+                      <li><i class="fa fa-map-marker user-profile-icon"></i> <?php echo $location?></li>
+                      <li><i class="fa fa-briefcase user-profile-icon"></i> <?php echo $desc?></li>
+                     <!--  <li class="m-top-xs">
                         <i class="fa fa-external-link user-profile-icon"></i>
-                        <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
-                      </li>
+                        <a href="#" target="_blank"></a>
+                      </li> -->
                     </ul>
 
-                    <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                   <!--  <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a> -->
                     <br />
 
-                    <!-- start skills -->
-                    <h4>Skills</h4>
+                    <!-- start hategauge -->
+                    <h4>Hatewords Mostly Used</h4>
                     <ul class="list-unstyled user_data">
                       <li>
                         <p>Web Applications</p>
@@ -172,25 +195,25 @@
                         </div>
                       </li>
                       <li>
-                        <p>Website Design</p>
+                        <p>hate you</p>
                         <div class="progress progress_sm">
                           <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70"></div>
                         </div>
                       </li>
                       <li>
-                        <p>Automation & Testing</p>
+                        <p>rudi kwenu</p>
                         <div class="progress progress_sm">
                           <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30"></div>
                         </div>
                       </li>
                       <li>
-                        <p>UI / UX</p>
+                        <p>mlafi</p>
                         <div class="progress progress_sm">
                           <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
                         </div>
                       </li>
                     </ul>
-                    <!-- end of skills -->
+                    <!-- end of hategauge -->
 
                   </div>
                   <div class="col-md-9 col-sm-9 col-xs-12">
@@ -219,28 +242,44 @@
                         <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
                         </li>
                       </ul>
+                      
                       <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
 
                           <!-- start recent activity -->
+                          <div id="scores">
                           <ul class="messages">
-                            <li>
-                              <img src="images/img.jpg" class="avatar" alt="Avatar">
+                          <?php
+                           $t = "SELECT tweet,composed_time FROM uri WHERE screen_name = '$user' ORDER BY composed_time DESC LIMIT 3";
+                            $result = $conn->query($t);
+                            if ($result->num_rows > 0) {
+                                while($row2 = $result->fetch_assoc()) {
+                                  //Collect tweet plus time composed 
+                                  $tweets = $row2["tweet"];
+                                  $time =$row2["composed_time"];
+                                
+                          ?>
+                            <li class="animated flipInX">
+                              <img src="<?php echo $prof ?>" class="avatar" alt="Avatar">
                               <div class="message_date">
-                                <h3 class="date text-info">24</h3>
-                                <p class="month">May</p>
+                                <h3 class="date text-info"><?php echo substr($time,7,12)?></h3>
+                                <p class="month"><?php echo substr($time,4,4)?></p>
                               </div>
                               <div class="message_wrapper">
-                                <h4 class="heading">Desmond Davison</h4>
-                                <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                                <h4 class="heading">@<?php echo $handle ?></h4>
+                                <blockquote class="message"><?php echo $tweets ?></blockquote>
                                 <br />
                                 <p class="url">
                                   <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                  <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                                  <a href="#"><i class="fa fa-paperclip"></i> Push as hatred message </a>
                                 </p>
                               </div>
                             </li>
-                            <li>
+                            <?php
+                                }
+                              }
+                            ?>
+                           <!--  <li>
                               <img src="images/img.jpg" class="avatar" alt="Avatar">
                               <div class="message_date">
                                 <h3 class="date text-error">21</h3>
@@ -252,44 +291,14 @@
                                 <br />
                                 <p class="url">
                                   <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                  <a href="#" data-original-title="">Download</a>
+                                  <a href="#" data-original-title="No idea">Download</a>
                                 </p>
                               </div>
-                            </li>
-                            <li>
-                              <img src="images/img.jpg" class="avatar" alt="Avatar">
-                              <div class="message_date">
-                                <h3 class="date text-info">24</h3>
-                                <p class="month">May</p>
-                              </div>
-                              <div class="message_wrapper">
-                                <h4 class="heading">Desmond Davison</h4>
-                                <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                <br />
-                                <p class="url">
-                                  <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                  <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                </p>
-                              </div>
-                            </li>
-                            <li>
-                              <img src="images/img.jpg" class="avatar" alt="Avatar">
-                              <div class="message_date">
-                                <h3 class="date text-error">21</h3>
-                                <p class="month">May</p>
-                              </div>
-                              <div class="message_wrapper">
-                                <h4 class="heading">Brian Michaels</h4>
-                                <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                <br />
-                                <p class="url">
-                                  <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                  <a href="#" data-original-title="">Download</a>
-                                </p>
-                              </div>
-                            </li>
+                            </li> -->
+                          
 
                           </ul>
+                          </div>
                           <!-- end recent activity -->
 
                         </div>
@@ -310,7 +319,7 @@
                               <tr>
                                 <td>1</td>
                                 <td>New Company Takeover Review</td>
-                                <td>Deveint Inc</td>
+                                <td>CloudCore Technologies</td>
                                 <td class="hidden-phone">18</td>
                                 <td class="vertical-align-mid">
                                   <div class="progress">
@@ -321,7 +330,7 @@
                               <tr>
                                 <td>2</td>
                                 <td>New Partner Contracts Consultanci</td>
-                                <td>Deveint Inc</td>
+                                <td>CloudCore Technologies</td>
                                 <td class="hidden-phone">13</td>
                                 <td class="vertical-align-mid">
                                   <div class="progress">
@@ -332,7 +341,7 @@
                               <tr>
                                 <td>3</td>
                                 <td>Partners and Inverstors report</td>
-                                <td>Deveint Inc</td>
+                                <td>CloudCore Technologies</td>
                                 <td class="hidden-phone">30</td>
                                 <td class="vertical-align-mid">
                                   <div class="progress">
@@ -343,7 +352,7 @@
                               <tr>
                                 <td>4</td>
                                 <td>New Company Takeover Review</td>
-                                <td>Deveint Inc</td>
+                                <td>CloudCore Technologies</td>
                                 <td class="hidden-phone">28</td>
                                 <td class="vertical-align-mid">
                                   <div class="progress">
@@ -357,8 +366,7 @@
 
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                          <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui
-                            photo booth letterpress, commodo enim craft beer mlkshk </p>
+                          <p><?php echo $desc?></p>
                         </div>
                       </div>
                     </div>
@@ -368,15 +376,15 @@
             </div>
           </div>
         </div>
+          <?php 
+                } else {
+                     echo "Somemthing went wrong";
+                }
 
+                $conn->close();
+          }?>
         <!-- footer content -->
-        <footer>
-          <div class="copyright-info">
-            <p class="pull-right">Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>  
-            </p>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
+       <?php require("templates/footer.php") ?>
         <!-- /footer content -->
 
       </div>
@@ -391,7 +399,12 @@
     <div class="clearfix"></div>
     <div id="notif-group" class="tabbed_notifications"></div>
   </div>
-
+  <script type="text/javascript">
+    var $scores = $("#scores");
+    setInterval(function () {
+        $scores.load("profile.php?user=<?php echo $handle?> #scores");
+    }, 60000);
+  </script>
   <script src="js/bootstrap.min.js"></script>
   
   <!-- bootstrap progress js -->

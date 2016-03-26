@@ -20,6 +20,7 @@
       <!-- page content -->
       <div class="right_col" role="main">
         <div class="">
+        <div id="scores">
                     <?php
                     $servername = "localhost";
                     $username = "root";
@@ -33,14 +34,36 @@
                          die("Connection failed: " . $conn->connect_error);
                     } 
                     $sql = "SELECT * FROM uri ";
+                    $kot = "SELECT * FROM uri GROUP BY screen_name";
+                    $max = "SELECT max(statuses_count), max(friends_count), max(followers_count) FROM uri LIMIT 1";
                     $result = $conn->query($sql);
+                    $result2 = $conn->query($kot);
+                    $result3 = $conn->query($max);
                     if ($result->num_rows > 0) {
-                      $i = 0;
-                      while($row = $result->fetch_assoc()) {
-                        //Output Data
-                        $tweets = count($row["tweet"]);
-                        $i++;
-                         }
+                    	 	$i = 0;
+	                      while($row = $result->fetch_assoc()) {
+	                        //Number of tweets
+	                        $tweets = count($row["tweet"]);
+	                        $i++;
+	                      }
+	                      //Counts the number of unique kenyans on twitter(kots)
+	                    	if ($result2->num_rows > 0) {
+	                    		$kots = 0;
+	                    		while ($row2 = $result2->fetch_assoc()) {
+	                    			$kots++;
+	                    		}
+	                    	}
+	                    	//Checks number of statuses & followers
+	                    	if ($result3->num_rows > 0) {
+	                    		while ($row3 = $result3->fetch_assoc()) {
+	                    			$statuses = $row3["max(statuses_count)"];
+	                    			$friends  = $row3["max(friends_count)"];
+	                    			$following  = $row3["max(followers_count)"];
+	                    			
+	                    		}
+	                    	}
+	                    	
+                     
                     } else {
                          echo "Somemthing went wrong";
                     }
@@ -48,44 +71,44 @@
                     $conn->close();
                     ?> 
         <div class="row top_tiles">
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
               <div class="tile-stats">
                 <div class="icon"><i class="fa fa-comments-o"></i>
                 </div>
                 <div class="count"><?php echo $i?></div>
 
-                <h3>Total tweets</h3>
+                <h3>Total Tweets</h3>
                 <p>All collected tweets</p>
               </div>
             </div>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
               <div class="tile-stats">
-                <div class="icon"><i class="fa fa-caret-square-o-right"></i>
+                <div class="icon"><i class="fa fa-globe"></i>
                 </div>
-                <div class="count">179</div>
+                <div class="count"><?php echo $kots?></div>
 
-                <h3>KoTs</h3>
-                <p>All Kenyans recorded to tweet</p>
+                <h3>KoTs Online</h3>
+                <p>Kenya twitter users</p>
               </div>
             </div>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
               <div class="tile-stats">
-                <div class="icon"><i class="fa fa-sort-amount-desc"></i>
+                <div class="icon"><i class="fa fa-twitter"></i>
                 </div>
-                <div class="count">179</div>
+                <div class="count"><?php echo $statuses?></div>
 
-                <h3>Top KoT</h3>
-                <p>Who tweets Most</p>
+                <h3>Maximum Tweets</h3>
+                <p>Person with most tweets</p>
               </div>
             </div>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
               <div class="tile-stats">
-                <div class="icon"><i class="fa fa-check-square-o"></i>
+                <div class="icon"><i class="fa fa-rss"></i>
                 </div>
-                <div class="count">179</div>
+                <div class="count"><?php echo $friends?></div>
 
                 <h3>Highest Follow</h3>
-                <p>Huge number follows on a KoT</p>
+                <p>Max number of followers on a person</p>
               </div>
             </div>
           </div>
@@ -117,16 +140,11 @@
               </div>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- footer content -->
-        <footer>
-          <div class="copyright-info">
-            <p class="pull-right">Ajibika Online - Design By <a href="https://ccoretechnologies.com" target="_blank">CloudCore Technologies</a>
-            </p>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
+        <?php require("templates/footer.php") ?>
         <!-- /footer content -->
 
       </div>
@@ -141,6 +159,12 @@
     <div class="clearfix"></div>
     <div id="notif-group" class="tabbed_notifications"></div>
   </div>
+  <script type="text/javascript">
+  	var $scores = $("#scores");
+		setInterval(function () {
+		    $scores.load("summary.php #scores");
+		}, 3000);
+  </script>
 
   <script src="js/bootstrap.min.js"></script>
 

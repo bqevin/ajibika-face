@@ -94,7 +94,7 @@
                     if ($conn->connect_error) {
                          die("Connection failed: " . $conn->connect_error);
                     } 
-                    $sql = "SELECT * FROM uri GROUP BY screen_name DESC LIMIT 500";
+                    $sql = "SELECT * FROM uri GROUP BY screen_name ORDER BY id DESC LIMIT 50";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                       $i = 1;
@@ -112,7 +112,7 @@
                         <td class="a-right a-right "><?php echo  $row["followers_count"] ?></td>
                         <td class=" "><?php echo  $row["time_zone"] ?></td>
                         <td class=" "><?php echo  $row["created_at"] ?></td>
-                        <td class=" last"><a href="profile.php?id=<?php echo $row['id_uniq']?>">View</a>
+                        <td class=" last"><a href="profile.php?user=<?php echo $row['screen_name']?>">View</a>
                         </td>
                       </tr>
                       <?php
@@ -128,7 +128,7 @@
                         <td class="a-right a-right "><?php echo  $row["followers_count"] ?></td>
                         <td class=" "><?php echo  $row["time_zone"] ?></td>
                         <td class=" "><?php echo  $row["created_at"] ?></td>
-                        <td class=" last"><a href="profile.php?id=<?php echo $row['id_uniq']?>">View</a>
+                        <td class=" last"><a href="profile.php?user=<?php echo $row['screen_name']?>">View</a>
                         </td>
                       </tr>
                       <?php }
