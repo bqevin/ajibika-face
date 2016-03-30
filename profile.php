@@ -189,7 +189,7 @@
                     <h4>Hatewords Mostly Used</h4>
                     <ul class="list-unstyled user_data">
                       <li>
-                        <p>Web Applications</p>
+                        <p>kihii</p>
                         <div class="progress progress_sm">
                           <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
                         </div>
@@ -262,8 +262,8 @@
                             <li class="animated flipInX">
                               <img src="<?php echo $prof ?>" class="avatar" alt="Avatar">
                               <div class="message_date">
-                                <h3 class="date text-info"><?php echo substr($time,7,12)?></h3>
-                                <p class="month"><?php echo substr($time,4,4)?></p>
+                                <h3 class="date text-info"><?php echo substr($time,4,4)?></h3>
+                                <p class="month"><?php echo substr($time,7,12)?></p>
                               </div>
                               <div class="message_wrapper">
                                 <h4 class="heading">@<?php echo $handle ?></h4>
