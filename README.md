@@ -1,2 +1,0 @@
-# ajibika-face
-online responsibility 
