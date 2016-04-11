@@ -136,6 +136,43 @@
                   </ul>
                   <div class="clearfix"></div>
                 </div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-modal">
+                  Add Hatewords
+                </button>
+                 <!-- Cropping modal -->
+                        <div class="modal fade" id="add-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                              <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Hate keyword <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Degree Irritation (%) <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                              </div>
+                              <div class="ln_solid"></div>
+                              <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                  <button type="submit" class="btn btn-primary">Cancel</button>
+                                  <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                              </div>
+
+                            </form>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.modal -->
+
 
               </div>
             </div>

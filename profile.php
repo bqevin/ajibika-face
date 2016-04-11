@@ -186,10 +186,10 @@
                     <br />
 
                     <!-- start hategauge -->
-                    <h4>Corrupted phrases</h4>
+                    <h4>Overal top corrupted phrases</h4>
                     <ul class="list-unstyled user_data">
                     <?php
-                    $hatequery = "SELECT * FROM words";
+                    $hatequery = "SELECT * FROM words LIMIT 2";
                     $check = $conn->query($hatequery);
                     if ($check->num_rows > 0) {
                         while($row = $check->fetch_assoc()) {
