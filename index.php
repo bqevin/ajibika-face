@@ -107,7 +107,7 @@ set_time_limit(60000);
           <div class="row top_tiles">
           <?php
                     // Include the search class
-                    require dirname(__FILE__).'/class.search.php';
+                    require dirname(__FILE__).'/classes/class.search.php';
                     $words = "SELECT * FROM words";
                     $checkWords = $conn->query($words);
                     if ($checkWords->num_rows > 0) {
@@ -141,6 +141,7 @@ set_time_limit(60000);
                           
                         }
                     }
+
                     $conn->close();
 
           ?>
@@ -173,7 +174,7 @@ set_time_limit(60000);
                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-modal">
                   Submit keywords
                 </button>
-                 <!-- Cropping modal -->
+                 <!-- Keyword modal -->
                         <div class="modal fade" id="add-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -182,12 +183,19 @@ set_time_limit(60000);
                               <h4 class="modal-title" id="myModalLabel">Add one word at a time</h4>
                             </div>
                             <div class="modal-body">
-                             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="saveKeyword.php" method="post">
                               <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Hate keyword <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                   <input type="text" id="first-name" name="hateframe" required="required" class="form-control col-md-7 col-xs-12">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Meaning/Explanation <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <input type="text" id="first-name" name="meaning" required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                               </div>
                               <div class="form-group">
@@ -197,6 +205,7 @@ set_time_limit(60000);
                                   <input type="text" id="last-name" name="degree"required="required" class="form-control col-md-7 col-xs-12">
                                 </div>
                               </div>
+                              <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                               <div class="ln_solid"></div>
                               <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
