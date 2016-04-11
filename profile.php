@@ -186,7 +186,7 @@
                     <br />
 
                     <!-- start hategauge -->
-                    <h4>Overal top corrupted phrases</h4>
+                    <h4>Overal TOP corrupted phrases</h4>
                     <ul class="list-unstyled user_data">
                     <?php
                     $hatequery = "SELECT * FROM words LIMIT 2";
@@ -303,7 +303,7 @@
                         <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
 
                           <!-- start user projects -->
-                          <table class="data table table-striped no-margin">
+<!--                           <table class="data table table-striped no-margin">
                             <thead>
                               <tr>
                                 <th>#</th>
@@ -359,7 +359,7 @@
                                 </td>
                               </tr>
                             </tbody>
-                          </table>
+                          </table> -->
                           <!-- end user projects -->
 
                         </div>
