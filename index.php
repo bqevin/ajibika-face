@@ -1,4 +1,6 @@
-<?php require("templates/header.php") ?>
+<?php require("templates/header.php") ;
+set_time_limit(60000);
+?>
 
 </head>
 
@@ -22,17 +24,8 @@
         <div class="">
         <div id="scores">
                     <?php
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $dbname = "tweets";
-
-                    // Create connection
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    // Check connection
-                    if ($conn->connect_error) {
-                         die("Connection failed: " . $conn->connect_error);
-                    } 
+                    // Include the search class
+                    require dirname(__FILE__).'/templates/db.connect.php';
                     $sql = "SELECT * FROM uri ";
                     $kot = "SELECT * FROM uri GROUP BY screen_name";
                     $max = "SELECT max(statuses_count), max(friends_count), max(followers_count) FROM uri LIMIT 1";
@@ -68,7 +61,6 @@
                          echo "Somemthing went wrong";
                     }
 
-                    $conn->close();
                     ?> 
         <div class="row top_tiles">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -111,6 +103,47 @@
                 <p>Max number of followers on a person</p>
               </div>
             </div>
+          </div>
+          <div class="row top_tiles">
+          <?php
+                    // Include the search class
+                    require dirname(__FILE__).'/class.search.php';
+                    $words = "SELECT * FROM words";
+                    $checkWords = $conn->query($words);
+                    if ($checkWords->num_rows > 0) {
+                        while($row = $checkWords->fetch_assoc()) {
+                          //hatewords fetched
+                          $hateframe = $row["hateframe"];
+                          // Instantiate a new search class object
+                          $search = new search();
+                          // Send the search term to our search class and store the result
+                          $search_results = $search->search($hateframe);
+                          //if ($search_results) 
+                          ?>
+                          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                          <div class="tile-stats">
+                            <div class="icon"><i class="fa fa-comments-o"></i>
+                            </div>
+                            <div class="count">
+                            <?php if (is_numeric($search_results['count'])){
+                              echo $search_results['count'];
+                              } else {
+                                echo "0"; 
+                              }
+                              
+                            ?>
+                            </div>
+                            <h3><?php echo $hateframe?></h3>
+                            <p>Short Description</p>
+                          </div>
+                        </div>
+                          <?php
+                          
+                        }
+                    }
+                    $conn->close();
+
+          ?>
           </div>
           <div class="clearfix"></div>
           <div class="row">
@@ -203,7 +236,7 @@
   <script type="text/javascript">
   	var $scores = $("#scores");
 		setInterval(function () {
-		    $scores.load("summary.php #scores");
+		    $scores.load("index.php #scores");
 		}, 3000);
   </script>
 
