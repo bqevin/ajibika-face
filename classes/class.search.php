@@ -48,9 +48,9 @@ class search {
     
     // Run the query //IGNORED THIS: OR screen_name LIKE '%{$sanitized}%'
     $query = $this->mysqli->query("
-      SELECT screen_name, name, tweet
+      SELECT *
       FROM uri
-      WHERE tweet LIKE '%{$sanitized}%'
+      WHERE tweet LIKE '%{$sanitized}%' ORDER BY composed_time DESC
     ");
     
     // Check results

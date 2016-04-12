@@ -41,7 +41,7 @@
           <div class="row">
 
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel" style="height:600px;">
+              <div class="x_panel" style="height:400px;">
                 <div class="x_title">
                   <h2>Influence</h2>
                   <ul class="nav navbar-right panel_toolbox">
@@ -68,13 +68,7 @@
         </div>
 
         <!-- footer content -->
-        <footer>
-          <div class="copyright-info">
-            <p class="pull-right">Ajibika Online - Design By <a href="https://ccoretechnologies.com" target="_blank">CloudCore Technologies</a>
-            </p>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
+        <?php require("templates/footer.php") ?>
         <!-- /footer content -->
 
       </div>

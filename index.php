@@ -24,7 +24,7 @@ set_time_limit(60000);
         <div class="">
         <div id="scores">
                     <?php
-                    // Include the search class
+                    // Include the db connector
                     require dirname(__FILE__).'/templates/db.connect.php';
                     $sql = "SELECT * FROM uri ";
                     $kot = "SELECT * FROM uri GROUP BY screen_name";
@@ -127,7 +127,7 @@ set_time_limit(60000);
                             </div>
                             <div class="count">
                             <?php if (is_numeric($search_results['count'])){
-                              echo $search_results['count'];
+                              echo "<a href='search.php?s=$hateframe' target='_blank'>".$search_results['count']."</a>";
                               } else {
                                 echo "0"; 
                               }

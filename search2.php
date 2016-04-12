@@ -4,7 +4,7 @@ if ( isset( $_GET['s'] ) ) {
 
   // Include the search class
   //include( 'class.search.php' );
-  require dirname(__FILE__).'/class.search.php';
+  require dirname(__FILE__).'/classes/class.search.php';
   
   // Instantiate a new instance of the search class
   $search = new search();

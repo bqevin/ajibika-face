@@ -83,17 +83,8 @@
 
                     <tbody>
                     <?php
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $dbname = "tweets";
-
-                    // Create connection
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    // Check connection
-                    if ($conn->connect_error) {
-                         die("Connection failed: " . $conn->connect_error);
-                    } 
+                    // Include the db connector
+                    require dirname(__FILE__).'/templates/db.connect.php';
                     $sql = "SELECT * FROM uri GROUP BY screen_name ORDER BY id DESC LIMIT 50";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
