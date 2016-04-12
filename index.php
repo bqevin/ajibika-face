@@ -114,6 +114,7 @@ set_time_limit(60000);
                         while($row = $checkWords->fetch_assoc()) {
                           //hatewords fetched
                           $hateframe = $row["hateframe"];
+                          $meaning = $row["meaning"];
                           // Instantiate a new search class object
                           $search = new search();
                           // Send the search term to our search class and store the result
@@ -134,7 +135,15 @@ set_time_limit(60000);
                             ?>
                             </div>
                             <h3><?php echo $hateframe?></h3>
-                            <p>Short Description</p>
+                            <p>
+                            <?php 
+                            if($meaning == ""){
+                                echo "No description provided";
+                                } else {
+                                  echo $meaning;
+                                }
+                            ?>
+                            </p>
                           </div>
                         </div>
                           <?php
