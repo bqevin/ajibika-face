@@ -62,98 +62,99 @@ set_time_limit(60000);
                     }
 
                     ?> 
-        <div class="row top_tiles">
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="tile-stats">
-                <div class="icon"><i class="fa fa-comments-o"></i>
-                </div>
-                <div class="count"><?php echo $i?></div>
-
-                <h3>Total Tweets</h3>
-                <p>All collected tweets</p>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="tile-stats">
-                <div class="icon"><i class="fa fa-globe"></i>
-                </div>
-                <div class="count"><?php echo $kots?></div>
-
-                <h3>KoTs Online</h3>
-                <p>Kenya twitter users</p>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="tile-stats">
-                <div class="icon"><i class="fa fa-twitter"></i>
-                </div>
-                <div class="count"><?php echo $statuses?></div>
-
-                <h3>Maximum Tweets</h3>
-                <p>Person with most tweets</p>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-              <div class="tile-stats">
-                <div class="icon"><i class="fa fa-rss"></i>
-                </div>
-                <div class="count"><?php echo $friends?></div>
-
-                <h3>Highest Follow</h3>
-                <p>Max number of followers on a person</p>
-              </div>
-            </div>
-          </div>
-          <div class="row top_tiles">
-          <?php
-                    // Include the search class
-                    require dirname(__FILE__).'/classes/class.search.php';
-                    $words = "SELECT * FROM words";
-                    $checkWords = $conn->query($words);
-                    if ($checkWords->num_rows > 0) {
-                        while($row = $checkWords->fetch_assoc()) {
-                          //hatewords fetched
-                          $hateframe = $row["hateframe"];
-                          $meaning = $row["meaning"];
-                          // Instantiate a new search class object
-                          $search = new search();
-                          // Send the search term to our search class and store the result
-                          $search_results = $search->search($hateframe);
-                          //if ($search_results) 
-                          ?>
-                          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                          <div class="tile-stats">
-                            <div class="icon"><i class="fa fa-comments-o"></i>
-                            </div>
-                            <div class="count">
-                            <?php if (is_numeric($search_results['count'])){
-                              echo "<a href='search.php?s=$hateframe' target='_blank'>".$search_results['count']."</a>";
-                              } else {
-                                echo "0"; 
-                              }
-                              
-                            ?>
-                            </div>
-                            <h3><?php echo $hateframe?></h3>
-                            <p>
-                            <?php 
-                            if($meaning == ""){
-                                echo "No description provided";
-                                } else {
-                                  echo $meaning;
-                                }
-                            ?>
-                            </p>
-                          </div>
+                <div class="row top_tiles">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-comments-o"></i>
                         </div>
-                          <?php
-                          
+                        <div class="count"><?php echo $i?></div>
+
+                        <h3>Total Tweets</h3>
+                        <p>All collected tweets</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-globe"></i>
+                        </div>
+                        <div class="count"><?php echo $kots?></div>
+
+                        <h3>KoTs Online</h3>
+                        <p>Kenya twitter users</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-twitter"></i>
+                        </div>
+                        <div class="count"><?php echo $statuses?></div>
+
+                        <h3>Maximum Tweets</h3>
+                        <p>Person with most tweets</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-rss"></i>
+                        </div>
+                        <div class="count"><?php echo $friends?></div>
+
+                        <h3>Highest Follow</h3>
+                        <p>Max number of followers on a person</p>
+                      </div>
+                    </div>
+                  </div>
+              <div class="row top_tiles">
+              <?php
+                        // Include the search class
+                        require dirname(__FILE__).'/classes/class.search.php';
+                        $words = "SELECT * FROM words";
+                        $checkWords = $conn->query($words);
+                        if ($checkWords->num_rows > 0) {
+                            while($row = $checkWords->fetch_assoc()) {
+                              //hatewords fetched
+                              $hateframe = $row["hateframe"];
+                              $meaning = $row["meaning"];
+                              // Instantiate a new search class object
+                              $search = new search();
+                              // Send the search term to our search class and store the result
+                              $search_results = $search->search($hateframe);
+                              //if ($search_results) 
+                              ?>
+                              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                              <div class="tile-stats">
+                                <div class="icon"><i class="fa fa-comments-o"></i>
+                                </div>
+                                <div class="count">
+                                <?php if (is_numeric($search_results['count'])){
+                                  echo "<a href='search.php?s=$hateframe' target='_blank'>".$search_results['count']."</a>";
+                                  } else {
+                                    echo "0"; 
+                                  }
+                                  
+                                ?>
+                                </div>
+                                <h3><?php echo $hateframe?></h3>
+                                <p>
+                                <?php 
+                                if($meaning == ""){
+                                    echo "No description provided";
+                                    } else {
+                                      echo $meaning;
+                                    }
+                                ?>
+                                </p>
+                              </div>
+                            </div>
+                              <?php
+                              
+                            }
                         }
-                    }
 
-                    $conn->close();
+                        $conn->close();
 
-          ?>
+              ?>
+              </div>
           </div>
           <div class="clearfix"></div>
           <div class="row">
