@@ -1,3 +1,8 @@
+<!--
+Author: Kevin Barasa
+Phone : +254724778017
+Email : kevin.barasa001@gmail.com
+-->
 <?php 
 require dirname(__FILE__).'/templates/header.php';
 //Check if search data was submitted
